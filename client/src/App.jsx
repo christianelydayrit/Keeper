@@ -1,10 +1,20 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Header from "./Header";
 import Note from "./Note";
 import CreateArea from "./CreateArea";
-
+import list from "./api/list"
 function App() {
   const [listNote, changeNotes] = useState([]);
+
+  useEffect(() =>{
+    async function loadList(){
+      const something = await list();
+      console.log("From Client " + something.title )
+      changeNotes(something)
+    }
+
+    loadList();
+  }, []);
 
   function getNote(inputText) {
     changeNotes((prevVal) => {
