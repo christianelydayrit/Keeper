@@ -1,5 +1,4 @@
 import express from "express";
-import bodyParser from "body-parser";
 import pg from "pg";
 import env from "dotenv";
 
@@ -17,6 +16,7 @@ const db = new pg.Client({
 db.connect()
 const app = express();
 const port= 3000;
+app.use(express.json());
 
 app.get("/api/todos", async (req, res) =>{
     try{
@@ -24,8 +24,30 @@ app.get("/api/todos", async (req, res) =>{
         console.log(list.rows)
         res.status(200).json(list.rows);
     }catch(e){
+        console.log( "error from api todos : " +e)
         res.status(500).json({ error: "Failed to fetch todos" });
     }
 })
 
+app.post("/api/add", async (req, res,) =>{
+    try{
+        const content = req.body.content;
+        const title = req.body.title;
+        await db.query("INSERT INTO todo (title, content) VALUES ($1, $2)", [title, content])
+        res.status(201).json({ message: "Todo added" });
+    }catch(e){
+        console.error("From api add: " + e);
+        res.status(500).json({ error: "Failed to add todo" });
+    }
+})
+
+app.delete("/api/delete/:id", async (req, res) =>{
+    const id = req.params.id;
+    try{
+        await db.query("DELETE FROM todo WHERE id = $1", [id])
+        res.status(200).json({ message: "Todo deleted" });
+    }catch(e){
+        res.status(500).json({ error: "Failed to delete todo" });
+    }
+})
 app.listen(port, () => console.log("Server Started"))

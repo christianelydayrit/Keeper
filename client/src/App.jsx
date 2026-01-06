@@ -3,32 +3,37 @@ import Header from "./Header";
 import Note from "./Note";
 import CreateArea from "./CreateArea";
 import list from "./api/list"
+import add from "./api/add"
+import del from "./api/delete"
+
 function App() {
   const [listNote, changeNotes] = useState([]);
 
   useEffect(() =>{
     async function loadList(){
-      const something = await list();
-      console.log("From Client " + something.title )
-      changeNotes(something)
+      const data = await list();
+      changeNotes(data);
     }
 
     loadList();
   }, []);
 
-  function getNote(inputText) {
-    changeNotes((prevVal) => {
-      return [
-        ...prevVal,
-        { title: inputText.title, content: inputText.content },
-      ];
-    });
+  async function getNote(inputText) {
+    
+    try{
+      await add(inputText.title, inputText.content);
+      const data = await list();
+      changeNotes(data);
+    }catch(e){
+      throw e
+    }
   }
 
-  function deleteItem(item) {
+  async function deleteItem(item) {
+    await del(item);
     changeNotes(() => {
-      return listNote.filter((x, index) => {
-        return index !== item;
+      return listNote.filter((x) => {
+        return x.id !== item;
       });
     });
   }
@@ -37,11 +42,11 @@ function App() {
     <div>
       <Header />
       <CreateArea getNote={getNote} />
-      {listNote.map((note, index) => (
+      {listNote.map((note) => (
         <Note
           delete={deleteItem}
-          key={index}
-          id={index}
+          key={note.id}
+          id={note.id}
           title={note.title}
           content={note.content}
         />
