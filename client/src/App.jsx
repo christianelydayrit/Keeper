@@ -1,67 +1,23 @@
-import React, { useState, useEffect } from "react";
-import Header from "./Header";
-import Note from "./Note";
-import CreateArea from "./CreateArea";
-import list from "./api/list"
-import add from "./api/add"
-import del from "./api/delete"
-import edit from "./api/edit"
+import { BrowserRouter, Routes, Route} from "react-router-dom";
+import Keeper from "./pages/Keeper";
+import Header from "./components/Header";
+import Home from "./pages/Home";
+import Login from "./pages/Login";
+import Register from "./pages/Register";
+
 
 function App() {
-  const [listNote, changeNotes] = useState([]);
-
-  useEffect(() =>{
-    async function loadList(){
-      const data = await list();
-      changeNotes(data);
-    }
-
-    loadList();
-  }, []);
-
-  async function getNote(inputText) {
-    
-    try{
-      await add(inputText.title, inputText.content);
-      const data = await list();
-      changeNotes(data);
-    }catch(e){
-      throw e
-    }
-  }
-
-  async function deleteItem(item) {
-    await del(item);
-    changeNotes(() => {
-      return listNote.filter((x) => {
-        return x.id !== item;
-      });
-    });
-  }
-
-  async function editItem(item){
-    console.log(item)
-    await edit(item);
-    const data = await list();
-    changeNotes(data);
-  }
-
   return (
-    <div>
+    <BrowserRouter>
       <Header />
-      <CreateArea getNote={getNote} />
-      {listNote.map((note) => (
-        <Note
-          delete={deleteItem}
-          key={note.id}
-          id={note.id}
-          title={note.title}
-          content={note.content}
-          edit={editItem}
-        />
-      ))}
-    </div>
-  );
+      <Routes>
+          <Route path="/" element={<Home />}/>
+          <Route path="/keeper" element={<Keeper />}/>
+          <Route path="/login" element={<Login />}/>
+          <Route path="/register" element={<Register />}/>
+      </Routes>
+    </BrowserRouter>
+  )
 }
 
 export default App;

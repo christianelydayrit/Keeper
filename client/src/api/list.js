@@ -7,7 +7,7 @@ async function list(){
         return data.data
 
     }catch(e){
-        console.log("this is error tite " + e);
+        console.log("this is error " + e);
         throw e
     }
 
