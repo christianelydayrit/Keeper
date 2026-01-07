@@ -20,12 +20,11 @@ app.use(express.json());
 
 app.get("/api/todos", async (req, res) =>{
     try{
-        const list = await db.query("SELECT * FROM todo")
+        const list = await db.query("SELECT * FROM todo ORDER BY id ASC")
         console.log(list.rows)
         res.status(200).json(list.rows);
     }catch(e){
-        console.log( "error from api todos : " +e)
-        res.status(500).json({ error: "Failed to fetch todos" });
+        res.status(500).json({ error: "Failed to fetch List" });
     }
 })
 
@@ -34,10 +33,10 @@ app.post("/api/add", async (req, res,) =>{
         const content = req.body.content;
         const title = req.body.title;
         await db.query("INSERT INTO todo (title, content) VALUES ($1, $2)", [title, content])
-        res.status(201).json({ message: "Todo added" });
+        res.status(201).json({ message: "List added" });
     }catch(e){
         console.error("From api add: " + e);
-        res.status(500).json({ error: "Failed to add todo" });
+        res.status(500).json({ error: "Failed to add List" });
     }
 })
 
@@ -45,9 +44,23 @@ app.delete("/api/delete/:id", async (req, res) =>{
     const id = req.params.id;
     try{
         await db.query("DELETE FROM todo WHERE id = $1", [id])
-        res.status(200).json({ message: "Todo deleted" });
+        res.status(200).json({ message: "List deleted" });
     }catch(e){
-        res.status(500).json({ error: "Failed to delete todo" });
+        res.status(500).json({ error: "Failed to delete List" });
     }
 })
+
+app.patch("/api/edit/:id", async (req, res) =>{
+    const id = req.params.id
+    const title = req.body.title
+    const content = req.body.content
+
+    try{
+        await db.query("UPDATE todo SET title=$1, content=$2 WHERE id=$3", [title, content, id])
+        res.status(200).json({ message: "List Edited" });
+    }catch(e){
+        res.status(500).json({ error: "Failed to Edit List" });
+    }
+})
+
 app.listen(port, () => console.log("Server Started"))

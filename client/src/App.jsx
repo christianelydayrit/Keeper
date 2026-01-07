@@ -5,6 +5,7 @@ import CreateArea from "./CreateArea";
 import list from "./api/list"
 import add from "./api/add"
 import del from "./api/delete"
+import edit from "./api/edit"
 
 function App() {
   const [listNote, changeNotes] = useState([]);
@@ -38,6 +39,13 @@ function App() {
     });
   }
 
+  async function editItem(item){
+    console.log(item)
+    await edit(item);
+    const data = await list();
+    changeNotes(data);
+  }
+
   return (
     <div>
       <Header />
@@ -49,9 +57,9 @@ function App() {
           id={note.id}
           title={note.title}
           content={note.content}
+          edit={editItem}
         />
       ))}
-
     </div>
   );
 }
