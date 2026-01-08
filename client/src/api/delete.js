@@ -2,7 +2,7 @@ import axios from "axios";
 
 async function del(id){
     try{
-        await axios.delete(`/api/delete/${id}`)
+        await axios.delete(`/api/notes/${id}`)
     }catch(e){
         throw e;
     }

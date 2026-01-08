@@ -7,7 +7,7 @@ async function add(title, content){
         content: content
     }
     try{
-        await axios.post( "/api/add" ,postData);
+        await axios.post( "/api/notes" ,postData);
         return 0
     }catch(e){
         console.error("Error sending note:", e);

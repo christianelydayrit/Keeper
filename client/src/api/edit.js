@@ -7,7 +7,7 @@ async function edit(item){
         content: item.content
     }
     try{
-        await axios.patch(`/api/edit/${item.id}`, data)
+        await axios.patch(`/api/notes/${item.id}`, data)
     }catch(e){
         console.log(e)
     }

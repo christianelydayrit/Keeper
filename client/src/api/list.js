@@ -3,7 +3,7 @@ import axios from "axios";
 async function list(){
     
     try{
-        const data = await axios.get("/api/todos")
+        const data = await axios.get("/api/notes")
         return data.data
 
     }catch(e){
