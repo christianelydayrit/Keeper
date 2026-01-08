@@ -1,5 +1,7 @@
 import { Container, Grid, Box, Typography, Button } from "@mui/material";
 import StickyNote2Icon from '@mui/icons-material/StickyNote2';
+import { Link } from "react-router-dom";
+
 function Home() {
   return (
     <Container>
@@ -11,16 +13,20 @@ function Home() {
             Where you can express your thoughts <StickyNote2Icon/>
         </Typography>
         <Grid container spacing={2}  justifyContent="center">
-            <Grid item>
-                <Button variant="contained" sx={{ backgroundColor: '#f5ba13', color: '#fff' }}>
-                Login
-                </Button>
+            <Grid >
+                <Link to="/login">
+                    <Button variant="contained" sx={{ backgroundColor: '#f5ba13', color: '#fff' }}>
+                    Login
+                    </Button>
+                </Link>
             </Grid>
 
-            <Grid item>
-                <Button variant="contained" sx={{ backgroundColor: 'black', color: '#fff' }}>
-                Register
-                </Button>
+            <Grid>
+                <Link to="/register">
+                    <Button variant="contained" sx={{ backgroundColor: 'black', color: '#fff' }}>
+                    Register
+                    </Button>
+                </Link>
             </Grid>
         </Grid>
       </Box>
