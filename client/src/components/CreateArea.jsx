@@ -42,7 +42,7 @@ function CreateArea(props) {
         />
         <Zoom in={isExpand} >
         <Fab className="zoom"
-          onClick={() => {
+          onClick={(event) => {
             event.preventDefault();
             props.getNote(inputText);
             setExpand(false);

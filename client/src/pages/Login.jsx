@@ -6,7 +6,8 @@ import Card from "../components/Card"
             cardName={"Login"} 
             buttonName="Login" 
             textInput={"Username"} 
-            passwordInput={["Password"]} 
+            passwordInput={["Password"]}
+            submitName={"Register"}
             ggle={{title: "SIGN IN WITH GOOGLE", link: "/login"}}/>
     );
   }

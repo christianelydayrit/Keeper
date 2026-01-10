@@ -1,4 +1,4 @@
-import {notes, addNote, deleteNote, editNote} from "../models/user.model.js"
+import {notes, addNote, deleteNote, editNote} from "../models/notes.model.js"
 
 export async function getNotes(req, res){
     try{

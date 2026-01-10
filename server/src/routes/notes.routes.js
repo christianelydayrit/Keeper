@@ -1,6 +1,7 @@
 import express from "express";
 import {getNotes, addNotes, deleteNotes, editNotes} from "../controllers/note.controller.js"
 
+
 const router = express.Router();
 
 router.get("/notes", getNotes);
