@@ -8,18 +8,16 @@ import {
     Button
   } from "@mui/material";
 import Sign from "./SignIn";
-import TextF from "./TextField";
-import Password from "./PasswordInput";
+import FormInput from "./FormInput";
 
 function Card(props){
-  const [userData, setUserData] = useState({
-    userName: "",
-    password0: "",
-    password1: ""
-  });
+  const textFields = props.textField
+  const initialData = textFields.reduce((acc, field) =>{
+    acc[field.name]= "";
+    return acc
+  }, {});
 
-  const [nameError, setNameError] = useState(false);
-  const [passError, setPassError] = useState(false);
+  const [userData, setUserData] = useState(initialData);
 
   function changes(user){
     const name = user.name;
@@ -31,8 +29,6 @@ function Card(props){
     }))
   }
 
-  const passW = props.passwordInput
-
     return (
         <Container maxWidth="sm">
           <Box
@@ -42,35 +38,48 @@ function Card(props){
               borderRadius: 2,
               boxShadow: 3,
               textAlign: "center",
+              backgroundColor:"white"
             }}
           >
             <Typography variant="h5" gutterBottom>
               {props.cardName}
             </Typography>
-    
+
+            <form method="POST" onSubmit={(e) =>{
+                  e.preventDefault();
+                  props.submitInput(userData);
+                }}>
             <Stack spacing={2}>
-
-              <TextF textInput={props.textInput} name="userName" value={userData.userName} change={changes} error={nameError} wrongName={props.helperTextName}/>
-
-              {passW.map((title, index) =>{ return <Password key={index} passwordInput={title} name={`password${index}`} value={userData[`password${index}`]} change={changes} error={passError} wrongPass={props.helperTextPass}/>})}
+           
+              {textFields.map((field, index) =>(
+                  <FormInput 
+                    key={index}
+                    inputLabel={field.inputLabel} 
+                    type={field.type} 
+                    name={field.name} 
+                    value={userData[field.name]} 
+                    change={changes} 
+                    error={field.error}  
+                    wrongEntry={field.wrongEntry}
+                />
+              ))}
 
               <Button
                 variant="contained"
                 size="large"
                 fullWidth
                 sx={{ backgroundColor: '#f5ba13', color: '#fff' }}
-                onClick={() =>{
-                  props.submitInput(userData)
-                }}
+                type="submit"
                 >
                 {props.submitName}
             </Button>
-
+            
               <Divider>OR</Divider>
 
               <Sign ggle={props.ggle}/>
 
             </Stack>
+            </form>
           </Box>
         </Container>
       );
