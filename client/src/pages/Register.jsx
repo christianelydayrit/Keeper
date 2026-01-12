@@ -1,15 +1,15 @@
 import { useState } from "react"
 import Card from "../components/Card"
 import register from "../api/auth/register"
-  function Register() {
-    const [userData, setUserData] = useState({
-      username: "",
-      password: ""
-    });
+import SnackBar from "../components/SnackBar"
+import { Box } from "@mui/material"
+import { useNavigate } from "react-router-dom"
 
+  function Register() {
     const [passError, setPassError] = useState(false)
     const [textError, setTextError] = useState(false)
-
+    const [success , setSuccess] = useState(false)
+    const navigate = useNavigate();
     const textFields = [
       {
         name: "username",
@@ -48,33 +48,39 @@ import register from "../api/auth/register"
 
       setPassError(false);
       setTextError(false);
-      
+
       if(checkPass(pass1, pass2)){
-        setUserData(()=>({
-          username: name,
-          password: pass1
-        }))
         const success = await register({
           username: name,
           password: pass1
         });
-        if(!success.successRegister){
-          setTextError(true)
-        }
-      }else{
+
+          if(!success.successRegister){
+            setTextError(true);
+          }else{
+            setSuccess(true);
+
+            setTimeout(() => {
+              navigate("/keeper");
+            }, 1000);
+          }
+        }else{
           setPassError(true);
-        console.log("Pass doesnt Match")
-      }0
+          console.log("Pass doesnt Match")
+        }
     }
 
     return (
-      <Card 
-        cardName={"Create Account"}
-        textField={textFields}
-        submitInput={postUser}
-        submitName={"Register"}
-        ggle={{title: "REGISTER WITH GOOGLE", link: "/register"}}/>
-        
+      <Box >
+        <Card 
+          cardName={"Create Account"}
+          textField={textFields}
+          submitInput={postUser}
+          submitName={"Register"}
+          ggle={{title: "REGISTER WITH GOOGLE", link: "/register"}}
+        />
+        <SnackBar success={success} message="Success Registration"/>
+      </Box>
     );
   }
   
