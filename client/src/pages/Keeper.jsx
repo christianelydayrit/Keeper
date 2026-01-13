@@ -1,19 +1,24 @@
 import React, { useState, useEffect } from "react";
-import Header from "../components/Header";
 import Note from "../components/Note";
 import CreateArea from "../components/CreateArea";
 import list from "../api/list"
 import add from "../api/add"
 import del from "../api/delete"
 import edit from "../api/edit"
+import { useNavigate } from "react-router-dom"
 
 function Keeper() {
   const [listNote, changeNotes] = useState([]);
+  const navigate = useNavigate();
 
   useEffect(() =>{
     async function loadList(){
       const data = await list();
-      changeNotes(data);
+      if(data.unauthorized === true){
+        navigate("/login");
+      }else{
+        changeNotes(data);
+      }
     }
 
     loadList();

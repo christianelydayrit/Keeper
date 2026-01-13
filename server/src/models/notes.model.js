@@ -1,12 +1,12 @@
 import db from "../config/db.js"
 
-export async function notes(){
-     const list = await db.query("SELECT * FROM todo ORDER BY id ASC")
+export async function notes(id){
+     const list = await db.query("SELECT * FROM todo WHERE user_id = $1 ORDER BY id ASC", [id])
      return list.rows
 }
 
-export async function addNote(title, content){
-    const result =  await db.query("INSERT INTO todo (title, content) VALUES ($1, $2)", [title, content])
+export async function addNote(id, title, content){
+    const result =  await db.query("INSERT INTO todo (title, content, user_id) VALUES ($1, $2, $3)", [title, content, id])
     return result.rowCount;
 }
 

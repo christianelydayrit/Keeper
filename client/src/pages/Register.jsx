@@ -61,7 +61,7 @@ import { useNavigate } from "react-router-dom"
             setSuccess(true);
 
             setTimeout(() => {
-              navigate("/keeper");
+              navigate("/login");
             }, 1000);
           }
         }else{

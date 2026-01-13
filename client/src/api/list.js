@@ -6,8 +6,10 @@ async function list(){
         const data = await axios.get("/api/notes")
         return data.data
 
-    }catch(e){
-        console.log("this is error " + e);
+    }catch(err){
+        if (err.response?.status === 401) {
+            return { unauthorized: true };
+        }
         throw e
     }
 

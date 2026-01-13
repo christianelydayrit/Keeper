@@ -20,7 +20,7 @@ export async function userLogin(username, password){
         const data = await login(username);
         if(data.length > 0){
             const match = await argon2.verify(data[0].password, password);
-            return match ? 1 : 0;
+            return match ? data[0].id : 0;
         }else{
             return 2; //user doesnt exist
         }

@@ -1,8 +1,5 @@
 import pg from "pg"
-import env from "dotenv";
-import path from "path";
 
-env.config({ path: path.resolve(process.cwd(), ".env") });
 
 const db = new pg.Client({
         user: process.env.PG_USER,

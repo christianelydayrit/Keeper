@@ -1,4 +1,5 @@
 import { userRegister, userLogin } from "../services/auth.service.js"
+import { signIn } from "../services/jwt.service.js"
 
 export async function userExist(req, res){
     const username = req.body.username;
@@ -16,9 +17,24 @@ export async function userLog(req, res){
     const username = req.body.username;
     const password = req.body.password;
     try{
-        const result = await userLogin(username.trim(), password);
-        console.log("Receive- auth.controller: " +  result)
-        res.json({successLogin: result});
+        const id = await userLogin(username.trim(), password);
+        if(id === 2 ){
+            res.json({successLogin: 2}); //Not existing
+            
+        }else if(id === 0){
+            res.json({successLogin: 0}); //Wrong pass
+        }        
+        else{
+            const token = signIn({userId: id})//Authenticate User
+            res.cookie("token", token, {
+                httpOnly: true, 
+                secure: false, 
+                sameSite: "lax", 
+                maxAge: 60 * 60 * 1000
+            })
+            res.json({successLogin: 1});
+        }
+        
     }catch(e){
         res.status(500).json({ error: "Failed to connect to auth service" });
     }

@@ -21,7 +21,7 @@ export async function checkUser(userName){
 
 export async function login(userName){
     try{
-        const data = await db.query("SELECT username, password FROM users WHERE LOWER(username) = LOWER($1)", [userName]);
+        const data = await db.query("SELECT id, username, password FROM users WHERE LOWER(username) = LOWER($1)", [userName]);
        return data.rows;
     }catch(e){
         console.log("Error at user.model (Login)" + e.stack)
