@@ -6,6 +6,7 @@ import add from "../api/add"
 import del from "../api/delete"
 import edit from "../api/edit"
 import { useNavigate } from "react-router-dom"
+import logout from "../api/auth/logout"
 
 function Keeper() {
   const [listNote, changeNotes] = useState([]);
@@ -50,6 +51,7 @@ function Keeper() {
     const data = await list();
     changeNotes(data);
   }
+
 
   return (
     <div>

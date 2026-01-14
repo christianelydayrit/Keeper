@@ -30,7 +30,8 @@ export async function userLog(req, res){
                 httpOnly: true, 
                 secure: false, 
                 sameSite: "lax", 
-                maxAge: 60 * 60 * 1000
+                maxAge: 60 * 60 * 1000,
+                path: "/"
             })
             res.json({successLogin: 1});
         }
@@ -38,4 +39,15 @@ export async function userLog(req, res){
     }catch(e){
         res.status(500).json({ error: "Failed to connect to auth service" });
     }
+}
+
+export function userLogout(req, res){
+    console.log("Received request from Frontend")
+    res.clearCookie("token", {
+        httpOnly: true, 
+        secure: false, 
+        sameSite: "lax",
+        path: "/"
+    })
+    res.json({successLogout: 1})
 }
