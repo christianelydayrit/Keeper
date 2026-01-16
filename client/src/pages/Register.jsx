@@ -45,7 +45,6 @@ import { useNavigate } from "react-router-dom"
       const name = input.username;
       const pass1 = input.password0;
       const pass2 = input.password1;
-      console.log("From postUser: " +  input);
 
       setPassError(false);
       setTextError(false);

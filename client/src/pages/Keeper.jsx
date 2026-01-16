@@ -46,7 +46,6 @@ function Keeper() {
   }
 
   async function editItem(item){
-    console.log(item)
     await edit(item);
     const data = await list();
     changeNotes(data);

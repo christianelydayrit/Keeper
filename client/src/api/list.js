@@ -11,6 +11,7 @@ async function list(){
             return { unauthorized: true };
         }
         throw e
+        throw e;
     }
 
 }

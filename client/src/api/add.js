@@ -11,6 +11,7 @@ async function add(title, content){
         return 0
     }catch(e){
         console.error("Error sending note:", e);
+        throw e;
     }
 }
 

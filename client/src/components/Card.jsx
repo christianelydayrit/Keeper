@@ -22,7 +22,6 @@ function Card(props){
   function changes(user){
     const name = user.name;
     const value = user.value;
-    console.log(value)
     setUserData((prevVal) =>({
       ...prevVal,
       [name]: value
