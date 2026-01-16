@@ -6,7 +6,6 @@ export async function userExist(req, res){
     const password = req.body.password;
     try{
         const exist = await userRegister(username.trim(), password);
-        console.log("Receive- auth.controller: " +  exist)
         res.json({successRegister: exist});
     }catch(e){
         res.status(500).json({ error: "Failed to connect to auth service" });
@@ -45,9 +44,10 @@ export function userLogout(req, res){
     
     const provider = req.user.provider;
     res.clearCookie("token", {
-        httpOnly: true, 
-        secure: false, 
-        sameSite: "lax",
+        httpOnly: true,
+        secure: process.env.NODE_ENV === "production",
+        sameSite: process.env.NODE_ENV === "production" ? "none" : "lax",
+        maxAge: 60 * 60 * 1000,
         path: "/"
     })
     res.json({provider: provider})
@@ -60,9 +60,9 @@ export async function googelAuth(req, res){
         
         const token = signIn({userId: user.userId, provider: user.provider})
         res.cookie("token", token, {// REPEATING SIGNIN
-            httpOnly: true, 
-            secure: false, 
-            sameSite: "lax", 
+            httpOnly: true,
+            secure: process.env.NODE_ENV === "production",
+            sameSite: process.env.NODE_ENV === "production" ? "none" : "lax",
             maxAge: 60 * 60 * 1000,
             path: "/"
         })
