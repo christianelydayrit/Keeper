@@ -1,9 +1,9 @@
 import axios from "axios";
 
 async function list(){
-    
+    const API_URL = import.meta.env.VITE_API_URL;
     try{
-        const data = await axios.get("/api/notes")
+        const data = await axios.get(`${API_URL}/api/notes`, {withCredentials: true})
         return data.data
 
     }catch(err){
