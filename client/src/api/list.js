@@ -10,8 +10,6 @@ async function list(){
         if (err.response?.status === 401) {
             return { unauthorized: true };
         }
-        throw e
-        
     }
 
 }
