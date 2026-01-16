@@ -26,9 +26,9 @@ export async function userLog(req, res){
         else{
             const token = signIn({userId: user.userId, provider: user.provider})//Authenticate User
             res.cookie("token", token, {// REPEATING SIGNIN
-                httpOnly: true, 
-                secure: false, 
-                sameSite: "lax", 
+                httpOnly: true,
+                secure: process.env.NODE_ENV === "production",
+                sameSite: process.env.NODE_ENV === "production" ? "none" : "lax",
                 maxAge: 60 * 60 * 1000,
                 path: "/"
             })
