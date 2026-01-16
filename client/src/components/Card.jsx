@@ -44,7 +44,7 @@ function Card(props){
               {props.cardName}
             </Typography>
 
-            <form method="POST" onSubmit={(e) =>{
+            <form style={{ width: "100%" }} method="POST" onSubmit={(e) =>{
                   e.preventDefault();
                   props.submitInput(userData);
                 }}>
@@ -65,7 +65,7 @@ function Card(props){
 
               <Button
                 variant="contained"
-                size="large"
+                size="small"
                 fullWidth
                 sx={{ backgroundColor: '#f5ba13', color: '#fff' }}
                 type="submit"
@@ -74,8 +74,7 @@ function Card(props){
             </Button>
             
               <Divider>OR</Divider>
-
-              <Sign ggle={props.ggle}/>
+                <Sign ggle={props.ggle} />
 
             </Stack>
             </form>

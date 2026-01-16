@@ -23,7 +23,7 @@ function CreateArea(props) {
 
   return (
     <div>
-      <form>
+      <form style={{ width: "100%" }}>
         {isExpand && <input
           name="title"
           placeholder="Title"
