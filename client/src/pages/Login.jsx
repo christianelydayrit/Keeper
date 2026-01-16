@@ -67,7 +67,7 @@ import { useNavigate } from "react-router-dom"
           textField={textFields}
           submitInput={loginUser}
           submitName={"Login"}
-          ggle={{title: "SIGN IN WITH GOOGLE", link: "/login"}}
+          ggle="signin_with"
         />
         <SnackBar success={success} message="Success Login"/>
       </Box>

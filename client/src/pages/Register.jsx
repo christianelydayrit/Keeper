@@ -5,6 +5,7 @@ import SnackBar from "../components/SnackBar"
 import { Box } from "@mui/material"
 import { useNavigate } from "react-router-dom"
 
+
   function Register() {
     const [passError, setPassError] = useState(false)
     const [textError, setTextError] = useState(false)
@@ -77,7 +78,7 @@ import { useNavigate } from "react-router-dom"
           textField={textFields}
           submitInput={postUser}
           submitName={"Register"}
-          ggle={{title: "REGISTER WITH GOOGLE", link: "/register"}}
+          ggle="signup_with"
         />
         <SnackBar success={success} message="Success Registration"/>
       </Box>

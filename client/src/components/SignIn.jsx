@@ -1,18 +1,21 @@
-import {Button } from "@mui/material";
-import { Link } from "react-router-dom";
-
+import { GoogleLogin } from "@react-oauth/google";
+import googleSignIn from "../api/auth/google.js"
+import { useNavigate } from "react-router-dom"
 function Sign(props){
-    const {title, link} = props.ggle;
-    return <Link to={link}>
-        <Button
-        variant="outlined"
-        color="secondary"
-        size="large"
-        fullWidth
-         >
-        {title}
-    </Button>
-  </Link>
+  const navigate = useNavigate();
+  return(
+    <GoogleLogin 
+    onSuccess={async (response) => {
+      const success = await googleSignIn(response)
+
+      if(success){navigate("/keeper");
+      }else{console.log("Pass doesnt Match")} 
+    }} 
+    onError={() => console.log("Login Failed")}
+    text={props.ggle}
+    auto_select="true"
+    />
+  )
 }
 
 export default Sign;

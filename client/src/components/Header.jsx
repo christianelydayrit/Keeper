@@ -2,6 +2,7 @@ import HighlightIcon from '@mui/icons-material/Highlight';
 import { useLocation, useNavigate } from "react-router-dom";
 import logout from "../api/auth/logout"
 import { Button, Box } from "@mui/material";
+import { googleLogout} from "@react-oauth/google";
 function Header(){
     const location = useLocation();
     const navigate = useNavigate()
@@ -12,10 +13,9 @@ function Header(){
 
     
     async function userLogout(){
-        const result = await logout();
-        if(result === 1){
-            navigate("/login");
-        }
+        const provider = await logout();
+        provider === "google" && googleLogout();
+        navigate("/login");
     }
 
     return <header>
